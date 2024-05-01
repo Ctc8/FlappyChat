@@ -1,15 +1,26 @@
-from flask import Flask, render_template, request, session, redirect, url_for
-from flask_socketio import join_room, leave_room, send, SocketIO
+from flask import Flask, render_template, request, session, redirect, url_for, flash
+from flask_sqlalchemy import SQLAlchemy
+from flask_login import login_user, LoginManager, UserMixin, login_required, current_user, logout_user
+
+from werkzeug.security import generate_password_hash
 import random
+from flask_socketio import join_room, leave_room, send, SocketIO
 from string import ascii_uppercase
 
+
 app = Flask(__name__)
+app.config['SQLALCHEMY_DATABASE_URI'] = "sqlite:///db.sqlite3"
+db = SQLAlchemy(app)
 
 app.config["SECRET_KEY"] = "1234"
-
 socketio = SocketIO(app)
 
 rooms = {}
+
+class User(UserMixin, db.Model):
+  id = db.Column(db.Integer, primary_key=True)
+  username = db.Column(db.String(30), unique=True) 
+  password = db.Column(db.String(30))  
 
 def generate_unique_code(length):
     while True:
@@ -21,8 +32,38 @@ def generate_unique_code(length):
             break
     return code
 
-@app.route("/",methods=["POST","GET"])
+@app.route("/")
 def home():
+    return render_template('login.html')
+
+
+# Signup
+@app.route("/signup", methods=["GET", "POST"])
+def signup():
+    if request.method == "POST":
+        username = request.form.get("username")
+        password = request.form.get("password")
+
+        if not username or not password:
+            return render_template("signup.html", error="Please enter a username and password!")
+
+        user = User.query.filter_by(username=username).first()
+
+        if user:
+            return render_template("signup.html", error="Username already exists!")
+
+        # new_user = User(username=username, password=generate_password_hash(password))
+        new_user = User(username=username, password=(password))
+        db.session.add(new_user)
+        db.session.commit()
+
+        return redirect(url_for("home"))
+
+    return render_template("signup.html")
+
+
+@app.route("/chat",methods=["POST","GET"])
+def chat():
     session.clear()
     if request.method == "POST":
         name = request.form.get("name")
@@ -102,4 +143,6 @@ def disconnect():
     print(f"{name} has left the room {room}")
 
 if __name__ == "__main__":
+    with app.app_context():
+        db.create_all()
     socketio.run(app,debug=True)

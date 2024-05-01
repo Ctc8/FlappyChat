@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		
+		<link rel="stylesheet" href="/static/style.css" />
+
+		<title>Login Page</title>
+	</head>
+		<h2>MeChat</h2>
+		<form action="http://localhost:5001/login" method="post">
+			<p>Username:</p>
+			<p><input type="text" name="username" required /></p>
+			<p>Password:</p>
+			<p><input type="password" name="password" required /></p>
+			<p><input type="submit" value="Login" /></p>
+			<p><a href="{{ url_for('signup') }}" class="button">Sign Up Here</a></p>
+			{% if error %}
+			<p class="error">{{ error }}</p>
+			{% endif %}
+		</form>
+	</body>
+</html>
