@@ -12,6 +12,9 @@ app = Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI'] = "sqlite:///db.sqlite3"
 db = SQLAlchemy(app)
 
+login_manager = LoginManager()
+login_manager.init_app(app)
+
 app.config["SECRET_KEY"] = "1234"
 socketio = SocketIO(app)
 
@@ -36,6 +39,9 @@ def generate_unique_code(length):
 def home():
     return render_template('login.html')
 
+@app.route("/test")
+def test():
+    return render_template("test.html")
 
 # Signup
 @app.route("/signup", methods=["GET", "POST"])
@@ -60,6 +66,29 @@ def signup():
         return redirect(url_for("home"))
 
     return render_template("signup.html")
+
+@login_manager.user_loader
+def load_user(user_id):
+    return User.query.get(int(user_id))
+
+#Login
+@app.route('/login', methods=['GET', 'POST'])
+def login():
+  error = None
+  if request.method == 'POST':
+    username = request.form.get('username')
+    password = request.form.get('password')
+
+    user = User.query.filter_by(username=username).first()    
+
+    if user and user.password == password:  
+      login_user(user)
+      return redirect(url_for('test'))
+
+    error = 'Invalid username or password'
+
+    signup_url = url_for('signup')
+  return render_template('login.html', error=error, signup_url=signup_url)
 
 
 @app.route("/chat",methods=["POST","GET"])
