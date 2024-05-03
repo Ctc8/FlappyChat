@@ -3,16 +3,45 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="/static/accPages.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
   <title>Sign Up</title>
 </head>
+
 <body>
-  <h2>Sign Up</h2>
-  <form action="/signup" method="post">
-    <label for="username">Username:</label><br>
-    <input type="text" id="username" name="username" required><br>
-    <label for="password">Password:</label><br>
-    <input type="password" id="password" name="password" required><br>
-    <input type="submit" value="Sign Up">
-  </form>
+  <div class="container">
+    <form action="/signup" method="post">
+      <h2>Sign Up</h2>
+      <label for="username">Username:</label><br>
+      <input type="text" id="username" name="username" required><br>
+      <label for="password">Password:</label><br>
+      <input type="password" id="password" name="password" required><br>
+      <input type="submit" value="Sign Up">
+    </form>
+  </div>
+
+  <button id="darkModeToggle"><i class="fas fa-adjust"></i></button>
+
+		<script>
+			const darkModeToggle = document.getElementById('darkModeToggle');
+    		const body = document.body;
+
+			darkModeToggle.addEventListener('click', () => {
+				body.classList.toggle('dark-mode');
+				updateButtonIcon();
+			});
+
+			function updateButtonIcon() {
+				const icon = darkModeToggle.querySelector('i');
+				if (body.classList.contains('dark-mode')) {
+					icon.classList.remove('fa-sun');
+					icon.classList.add('fa-moon');
+				} else {
+					icon.classList.remove('fa-moon');
+					icon.classList.add('fa-sun');
+				}
+			}
+		</script>
 </body>
+
 </html>

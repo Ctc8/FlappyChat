@@ -1,0 +1,140 @@
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f2f2f2;
+    margin: 0;
+    padding: 0;
+}
+
+.additional-text {
+    font-size: 14px;
+    color: #666666;
+    margin-right: 10px;
+    display: inline-block; 
+    vertical-align: middle; 
+}
+.container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+
+
+form {
+    background-color: #ffffff;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    width: 300px;
+}
+
+h2 {
+    text-align: center;
+    color: #333333;
+}
+
+input[type="text"],
+input[type="password"],
+input[type="submit"] {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    box-sizing: border-box;
+    font-size:18px;
+}
+
+input[type="submit"] {
+    background-color: #007bff;
+    color: #ffffff;
+    cursor: pointer;
+}
+
+input[type="submit"]:hover {
+    background-color: #0056b3;
+}
+
+.button {
+    display: inline-block; 
+    text-align: center;
+    text-decoration: none;
+    background-color: #007bff;
+    border: 1px solid #ccc;
+    color: #ffffff;
+    padding: 10px 20px;
+    border-radius: 5px;
+}
+
+.button:hover {
+    background-color: #0056b3;
+}
+
+.dark-mode {
+    background-color: #222222;
+    color: #ffffff;
+}
+
+.dark-mode input[type="text"],
+.dark-mode input[type="password"],
+.dark-mode input[type="submit"] {
+    background-color: #555555;
+    color: #ffffff;
+    border-color: #666666;
+}
+
+.dark-mode form
+{
+    background-color: #303030;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.dark-mode .button {
+    background-color: #333333;
+    color: #ffffff;
+    border: 1px solid #666666;
+}
+
+.dark-mode .button:hover
+{
+    background-color: #757575;
+}
+
+.dark-mode h2 {
+    text-align: center;
+    color: #f2f2f2;
+}
+
+.dark-mode .additional-text
+{
+    color: #f2f2f2;
+}
+
+
+.dark-mode input[type="submit"] {
+    background-color: #333333;
+    color: #ffffff;
+    cursor: pointer;
+}
+
+.dark-mode input[type="submit"]:hover {
+    background-color: #757575;
+}
+
+#darkModeToggle {
+    position: fixed;
+    bottom: 20px;
+    left: 20px;
+    padding: 10px 20px;
+    background-color: #002856;
+    color: #ffffff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+#darkModeToggle:hover {
+    background-color: #0056b3;
+}

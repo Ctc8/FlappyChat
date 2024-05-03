@@ -4,21 +4,54 @@
 		<meta charset="UTF-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 		
-		<link rel="stylesheet" href="/static/style.css" />
+		<link rel="stylesheet" href="/static/accPages.css" />
+		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+		
 
 		<title>Login Page</title>
 	</head>
-		<h2>MeChat</h2>
-		<form action="/login" method="post">
-			<p>Username:</p>
-			<p><input type="text" name="username" required /></p>
-			<p>Password:</p>
-			<p><input type="password" name="password" required /></p>
-			<p><input type="submit" value="Login" /></p>
-			<p><a href="{{ url_for('signup') }}" class="button">Sign Up Here</a></p>
-			{% if error %}
-			<p class="error">{{ error }}</p>
-			{% endif %}
-		</form>
+	<body>
+		<div class="container">
+			<form action="/login" method="post">
+				<h2>MeChat</h2>
+				<p>Username:</p>
+				<p><input type="text" name="username" required /></p>
+				<p>Password:</p>
+				<p><input type="password" name="password" required /></p>
+				<p><input type="submit" value="Login" /></p>
+				<p>
+					<span class="additional-text">Don't have an account?</span>
+					<a href="{{ url_for('signup') }}" class="button">Sign Up Here</a>
+				</p>
+				
+				{% if error %}
+				<p class="error">{{ error }}</p>
+				{% endif %}
+			</form>
+			
+		</div>
+		<button id="darkModeToggle"><i class="fas fa-adjust"></i></button>
+
+		<script>
+			const darkModeToggle = document.getElementById('darkModeToggle');
+    		const body = document.body;
+
+			darkModeToggle.addEventListener('click', () => {
+				body.classList.toggle('dark-mode');
+				updateButtonIcon();
+			});
+
+			function updateButtonIcon() {
+				const icon = darkModeToggle.querySelector('i');
+				if (body.classList.contains('dark-mode')) {
+					icon.classList.remove('fa-sun');
+					icon.classList.add('fa-moon');
+				} else {
+					icon.classList.remove('fa-moon');
+					icon.classList.add('fa-sun');
+				}
+			}
+		</script>
+		<script src="/scripts/darkmode.js"></script>
 	</body>
 </html>
