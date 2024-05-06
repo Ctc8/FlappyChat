@@ -1,0 +1,23 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="chat-container">
+  <h1>Chatroom</h1>
+  <h1>Welcome {{ user }}</h1>
+  <div id="chat-box">
+    {% for message in messages %}
+    <div class="{{ 'current-user' if message.sender.username == user else 'other-user' }}">
+      <p><strong>{{ message.sender.username }}:</strong> {{ message.content }}</p>
+    </div>
+    {% endfor %}
+  </div>
+  <form id="message-form" method="POST">
+    <input type="text" id="message-input" name="message" placeholder="Type a message" required>
+    <button type="submit">Send</button>
+  </form>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js" integrity="sha512-bLT0Qm9VnAYZDflyKcBaQ2gg0hSYNQrJ8RilYldYQ1FxQYoCLtUjuuRuZo+fjqhx/qtq/1itJ0C2ejDxltZVFg==" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/3.0.4/socket.io.js" integrity="sha512-aMGMvNYu8Ue4G+fHa359jcPb1u+ytAF+P2SCb+PxrjCdO3n3ZTxJ30zuH39rimUggmTwmh2u7wvQsDTHESnmfQ==" crossorigin="anonymous"></script>
+<script src="{{ url_for('static', filename='main.js') }}"></script>
+
+{% endblock %}

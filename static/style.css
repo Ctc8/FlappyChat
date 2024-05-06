@@ -69,3 +69,20 @@ h2 {
     font-size: 10px;
     color: darkblue;
 }
+
+
+
+.other-user {
+    text-align: left;
+    color: blue;
+}
+
+.current-user {
+    text-align: right;
+    color: red;
+}
+
+#message-form {
+    float: right;
+}
+
