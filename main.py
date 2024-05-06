@@ -6,7 +6,7 @@ from werkzeug.security import generate_password_hash
 import random
 from flask_socketio import join_room, leave_room, send, SocketIO
 from string import ascii_uppercase
-
+import sys
 
 app = Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI'] = "sqlite:///db.sqlite3"
@@ -63,7 +63,7 @@ def signup():
         db.session.add(new_user)
         db.session.commit()
 
-        return redirect(url_for("home"))
+        return redirect(url_for("login"))
 
     return render_template("signup.html")
 
@@ -83,25 +83,25 @@ def login():
 
     if user and user.password == password:  
       login_user(user)
-      return redirect(url_for('test'))
-
+      session["username"] = username
+      return redirect(url_for('chat'))
+    
     error = 'Invalid username or password'
 
-    signup_url = url_for('signup')
-  return render_template('login.html', error=error, signup_url=signup_url)
+  return render_template('login.html', error=error)
 
 
 @app.route("/chat",methods=["POST","GET"])
 def chat():
-    session.clear()
+    name = session.get("username",None)
+    # session.clear()
     if request.method == "POST":
-        name = request.form.get("name")
+        #name = request.form.get("name")
         code = request.form.get("code")
         join = request.form.get("join",False)
         create = request.form.get("create",False)
-
-        if not name:
-            return render_template("home.html",error="Please enter a name!",code=code,name=name)
+        #if not name:
+            #return render_template("home.html",error="Please enter a name!",code=code,name=name)
         
         if join != False and not code:
             return render_template("home.html",error="Please enter a room code!",code=code,name=name)
@@ -114,10 +114,11 @@ def chat():
             return render_template("home.html",error="Room does not exist!",code=code,name=name)
 
         session["room"] = room
+        print(name)
         session["name"] = name
         return redirect(url_for("room"))
     
-    return render_template("home.html")
+    return render_template("home.html",name=name)
 
 
 @app.route("/room")
