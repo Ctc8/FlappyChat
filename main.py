@@ -69,11 +69,15 @@ def chat(receiver_id):
         ((Message.sender_id == current_user.id) & (Message.receiver_id == receiver_id)) |
         ((Message.sender_id == receiver_id) & (Message.receiver_id == current_user.id))
     ).all()
-    return render_template('chat.html', messages=messages, user=current_user.username)
+    return render_template('chat.html', messages=messages, user=current_user.username, broadcast=True)
 
 @app.route("/")
 def index():
     return render_template('login.html')
+
+@socketio.on('join_room')
+def handle_join_room(data):
+    join_room(data['room'])
 
 # Signup
 @app.route("/signup", methods=["GET", "POST"])
