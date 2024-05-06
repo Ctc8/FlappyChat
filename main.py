@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request, session, redirect, url_for, flash
+from flask import Flask, render_template, request, session, redirect, url_for, flash, jsonify
 from flask_sqlalchemy import SQLAlchemy
 from flask_login import login_user, LoginManager, UserMixin, login_required, current_user, logout_user
 
@@ -118,10 +118,25 @@ def chat():
 
         session["room"] = room
         session["name"] = name
-        return redirect(url_for("room"))
+        return redirect(url_for("game"))
     
     room_list = list(rooms.keys())  # Retrieve the list of room codes
     return render_template("home.html", rooms=room_list)
+
+
+@app.route("/game")
+def game():
+    return render_template("flappy.html")
+
+@app.route('/report-score', methods=['POST'])
+def report_score():
+    score = 0
+    data = request.get_json()
+    score = data['score']
+
+    print(f"Received score: {score}")
+    session["score"] = score
+    return jsonify({'message': 'Score reported successfully'}), 200
 
 
 @app.route("/room")
@@ -150,6 +165,9 @@ def message(data):
 def connect(auth):
     room = session.get("room")
     name = session.get("name")
+    score = session.get("score")
+    print(f"Received sdasscore: {score}")
+
     if not room or not name:
         return
     if room not in rooms:
@@ -157,7 +175,7 @@ def connect(auth):
         return
     
     join_room(room)
-    send({"name":name,"message":"has entered the room"},to=room)
+    send({"name":name, "score":score, "message":"has entered the room"},to=room)
     rooms[room]["members"] += 1
     print(f"{name} joined room {room}")
 
