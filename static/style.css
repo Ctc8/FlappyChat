@@ -71,18 +71,80 @@ h2 {
 }
 
 
-
-.other-user {
-    text-align: left;
-    color: blue;
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f0f0f0;
 }
 
-.current-user {
-    text-align: right;
+.buttons {
+    width: 300px;
+    margin: 40px auto;
+    padding: 20px;
+    background-color: #fff;
+    border-radius: 5px;
+    box-shadow: 0px 0px 10px 0px rgba(0,0,0,0.1);
+}
+
+.buttons h3 {
+    margin: 0 0 20px 0;
+    text-align: center;
+}
+
+.buttons .join {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 20px;
+}
+
+.buttons .join input,
+.buttons .join button {
+    width: 45%;
+}
+
+.buttons .create-btn {
+    width: 100%;
+    padding: 10px;
+    background-color: #007BFF;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.buttons .create-btn:hover {
+    background-color: #0056b3;
+}
+
+.buttons ul {
+    color: red;
+    list-style-type: none;
+    padding: 0;
+}
+
+h3 {
+    margin: 20px 0;
+    text-align: center;
+}
+
+ul {
+    width: 300px;
+    margin: 0 auto;
+    padding: 20px;
+    background-color: #fff;
+    border-radius: 5px;
+    box-shadow: 0px 0px 10px 0px rgba(0,0,0,0.1);
+}
+
+ul li {
+    margin-bottom: 10px;
+}
+
+ul li:last-child {
+    margin-bottom: 0;
+}
+
+.user-left {
     color: red;
 }
-
-#message-form {
-    float: right;
-}
-
