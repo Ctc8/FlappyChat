@@ -62,7 +62,7 @@ def signup():
         if user:
             return render_template("signup.html", error="Username already exists!")
 
-        # new_user = User(username=username, password=generate_password_hash(password))
+        new_user = User(username=username, password=generate_password_hash(password))
         new_user = User(username=username, password=(password))
         db.session.add(new_user)
         db.session.commit()
