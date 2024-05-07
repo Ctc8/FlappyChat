@@ -1,56 +1,85 @@
-{% extends 'base.html' %}
-{% block content %}
-<div class="message-box">
-    <h2>Chat Room: {{code}}</h2>
-    <div class="messages" id="messages"></div>
-    <form id="message-form">
-        <div class="inputs">
-            <input type="text" rows="3" placeholder="Message" name="message" id="message"/>
-            <button type="submit" name="send" id="send-btn" onClick="sendMessage()">Send</button>
-        </div>
-    </form>
-    <a href="{{ url_for('chat') }}" class="btn">Go Back to Home</a>
-</div>
+{% extends 'base.html' %} {% block content %}
 
-<script type="text/javascript">
-    var socketio = io();
+<head>
+	<link rel="stylesheet" href="/static/room.css" />
+</head>
 
-    const messages = document.getElementById("messages")
+<body>
+	<div class="header">
+		<h1>FlappyChat</h1>
+		<h2>Room created by: {{creator}}</h2>
+	</div>
 
-    const createMessage = (name,msg,score) => {
-        const content = `
-        <div class="text">
-            <span>
-                <strong>${name} | Score: ${score}</strong>: ${msg}
-            </span>
-            
-            <span class="muted">
-                ${new Date().toLocaleString()}
-            </span>
-        </div>
-        `
-        messages.innerHTML += content;
-    };
+	<div class="row">
+		<div class="top">
+			<div class="side">
+				<h2>Chat Room: {{code}}</h2>
+				<a href="{{ url_for('chat') }}" class="btn">Go Back to Home</a>
+				<a href="{{ url_for('game') }}" class="btn">Play Again</a>
+			</div>
 
-    socketio.on("message", (data) => {
-        createMessage(data.name, data.message,data.score);
-    });
+			<div class="message-box">
+				<div class="messages" id="messages"></div>
+			</div>
+		</div>
 
-    const sendMessage = () => {
-        const message = document.getElementById("message")
-        if(message.value == "") return;
-        socketio.emit("message", {data: message.value})
-        message.value = "";
-    };
+		<form id="message-form">
+			<div class="inputs">
+				<input
+					type="text"
+					rows="3"
+					placeholder="Message"
+					name="message"
+					id="message"
+				/>
+				<button type="submit" name="send" id="send-btn" onClick="sendMessage()">
+					Send
+				</button>
+			</div>
+		</form>
+	</div>
 
-    document.getElementById('message-form').addEventListener('submit', function(event) {
-        event.preventDefault();
-        sendMessage();
-    });
-</script>
-{% for msg in messages%}
-<script type="text/javascript">
-    createMessage("{{msg.name}}","{{msg.message}}");
-</script>
-{% endfor %}
+    <script type="text/javascript">
+        var socketio = io();
+    
+        const messages = document.getElementById("messages")
+    
+        const createMessage = (name,msg,score) => {
+            const content = `
+            <div class="text">
+                <span>
+                    <strong>${name} | Score: ${score}</strong>: ${msg}
+                </span>
+                
+                <span class="muted">
+                    ${new Date().toLocaleString()}
+                </span>
+            </div>
+            `
+            messages.innerHTML += content;
+        };
+    
+        socketio.on("message", (data) => {
+            createMessage(data.name, data.message,data.score);
+        });
+    
+        const sendMessage = () => {
+            const message = document.getElementById("message")
+            if(message.value == "") return;
+            socketio.emit("message", {data: message.value})
+            message.value = "";
+        };
+    
+        document.getElementById('message-form').addEventListener('submit', function(event) {
+            event.preventDefault();
+            sendMessage();
+        });
+    </script>
+
+	{% for msg in messages%}
+	<script type="text/javascript">
+		createMessage("{{msg.name}}", "{{msg.message}}")
+	</script>
+	{% endfor %}
+</body>
 {% endblock %}

@@ -1,25 +1,33 @@
-{% extends 'base.html' %} {% block head %}
+{% extends 'base.html' %} 
+{% block head %}
 <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}" />
-{% endblock %} {% block content %}
-<form method="post" class="buttons">
-	<h3>Join a chatroom!</h3>
-	<div class="join">
-		<input type="text" placeholder="Room Code" name="code" value="{{code}}" />
-		<button type="submit" name="join">Join a Room</button>
-	</div>
-	<button type="submit" name="create" class="create-btn">Create a Room</button>
-	{% if error %}
-	<ul>
-		<li>{{error}}</li>
-	</ul>
-	{% endif %}
-</form>
-
-<h3>Existing Chatrooms:</h3>
-<ul>
-	{% for room in rooms %}
-	<li>{{ room }}</li>
-	{% endfor %}
-</ul>
-
+{% endblock %} 
+{% block content %}
+<div class="container">
+    <form method="post" class="buttons">
+			<div class="top-part">
+				<h2>FlappyChat</h2>
+			</div>
+        <h3>Welcome, {{user_name}}!</h3>
+        <div class="join">
+            <select name="code">
+                <option value="">Select a Room</option>
+                {% for room in rooms %}
+                <option value="{{ room }}">{{ room }}</option>
+                {% endfor %}
+            </select>
+            <button type="submit" name="join">Join a Room</button>
+        </div>
+        <button type="submit" name="create" class="create-btn">Create a Room</button>
+        {% if error %}
+        <ul>
+            <li>{{error}}</li>
+        </ul>
+        {% endif %}
+    </form>
+    <!-- Logout form -->
+    <form action="/logout" method="POST" class="logout-form">
+        <button type="submit" class="logout-btn">Logout</button>
+    </form>
+</div>
 {% endblock %}

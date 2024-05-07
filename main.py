@@ -4,7 +4,7 @@ from flask_login import login_user, LoginManager, UserMixin, login_required, cur
 
 from werkzeug.security import generate_password_hash
 import random
-from flask_socketio import join_room, leave_room, send, SocketIO
+from flask_socketio import join_room, leave_room, send, SocketIO, emit
 from string import ascii_uppercase
 
 
@@ -19,6 +19,7 @@ app.config["SECRET_KEY"] = "1234"
 socketio = SocketIO(app)
 
 rooms = {}
+scores = {}
 
 class User(UserMixin, db.Model):
   id = db.Column(db.Integer, primary_key=True)
@@ -97,6 +98,7 @@ def login():
 
 @app.route("/chat",methods=["POST","GET"])
 def chat():
+    name = session.get("username")
     if request.method == "POST":
         name = session.get('username')  # Get the name from the session
         code = request.form.get("code")
@@ -112,7 +114,7 @@ def chat():
         room = code
         if create != False:
             room = generate_unique_code(4)
-            rooms[room] = {"members":0,"messages": []}
+            rooms[room] = {"members":0,"messages": [], "creator": name}
         elif code not in rooms:
             return render_template("home.html",error="Room does not exist!",code=code,name=name)
 
@@ -121,12 +123,13 @@ def chat():
         return redirect(url_for("game"))
     
     room_list = list(rooms.keys())  # Retrieve the list of room codes
-    return render_template("home.html", rooms=room_list)
+    return render_template("home.html", rooms=room_list, user_name=name)
 
 
 @app.route("/game")
 def game():
     return render_template("flappy.html")
+
 
 @app.route('/report-score', methods=['POST'])
 def report_score():
@@ -139,13 +142,19 @@ def report_score():
     return jsonify({'message': 'Score reported successfully'}), 200
 
 
+
+@app.route('/logout', methods=['POST'])
+def logout():
+    session.clear()  # Clear the session data
+    return redirect(url_for('login'))  # Redirect to the login page
+
 @app.route("/room")
 def room():
     room = session.get("room")
     if room is None or session.get("name") is None or room not in rooms:
         return redirect(url_for("chat"))
     
-    return render_template("room.html",code=room,messages=rooms[room]["messages"])
+    return render_template("room.html", code=room, messages=rooms[room]["messages"], creator=rooms[room]["creator"])
 
 @socketio.on("message")
 def message(data):
@@ -166,7 +175,8 @@ def connect(auth):
     room = session.get("room")
     name = session.get("name")
     score = session.get("score")
-    print(f"Received sdasscore: {score}")
+    print(f"Received a score of: {score}")
+    emit('score', {'score': score}, room=room)
 
     if not room or not name:
         return

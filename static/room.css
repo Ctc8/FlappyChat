@@ -1,0 +1,106 @@
+/* room.css */
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+    background-color: #6677f9;
+    margin-top: 0px;
+    padding-top: 90px;
+}
+
+/* Header/logo Title */
+.header {
+  position:fixed;
+  width: 100%;
+  top: 0;
+  text-align: left;
+  background: #6677f9;
+  color: white;
+  padding: 5px;
+  margin-bottom: 0px;
+ 
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.row {  
+  display: flex;
+  flex-wrap: wrap;
+  flex-direction: column;
+  width: 100%;
+  height:100%;
+}
+
+.top {
+  display: flex;
+}
+
+.side {
+  flex: 30%;
+  background-color: #7081ff;
+  color: white;
+  
+}
+
+
+.message-box {
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    flex: 70%;
+    background-color: white;
+    padding:0px;
+    margin-top: auto;
+  }
+  
+  .messages {
+    overflow-y: auto;
+    /*max-height: 80%;*/
+    margin-top: 8px;
+    margin-bottom: 10px;
+    padding: 10px;
+    height: 100%;
+  }
+  
+  .inputs {
+    flex: 1;
+    align-items: center;
+    margin-top: 10px;
+    background-color: #6677f9;
+  }
+  
+  #message {
+    flex: 1;
+    padding: 10px;
+    border: 1px solid #ddd;
+  }
+  
+  #send-btn {
+    padding: 10px 20px;
+    background-color: #8793d1;
+    color: #fff;
+    border: none;
+    cursor: pointer;
+  }
+  
+  #send-btn:hover {
+    background-color: #7889db;
+  }
+  
+  .btn {
+    display: inline-block;
+    padding: 10px 20px;
+    background-color: #8793d1;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    text-decoration: none;
+    margin-left: auto;
+  }
+  
+  .btn:hover {
+    background-color: #7889db;
+  }
+

@@ -48,6 +48,7 @@
 
 h2 {
     text-align: center;
+    /* color: white */
 
 }
 
@@ -75,16 +76,17 @@ body {
     font-family: Arial, sans-serif;
     margin: 0;
     padding: 0;
-    background-color: #f0f0f0;
+    background-color: #dbdef5;
+    /* color: white; */
 }
 
 .buttons {
     width: 300px;
     margin: 40px auto;
     padding: 20px;
-    background-color: #fff;
+    background-color: #6a7bf9;
     border-radius: 5px;
-    box-shadow: 0px 0px 10px 0px rgba(0,0,0,0.1);
+    
 }
 
 .buttons h3 {
@@ -106,7 +108,7 @@ body {
 .buttons .create-btn {
     width: 100%;
     padding: 10px;
-    background-color: #007BFF;
+    background-color: #b1c0f3;
     color: #fff;
     border: none;
     border-radius: 5px;
@@ -114,11 +116,12 @@ body {
 }
 
 .buttons .create-btn:hover {
-    background-color: #0056b3;
+    background-color: #8793d1;
+    color: #dddddd;
 }
 
 .buttons ul {
-    color: red;
+    color: rgb(191, 25, 25);
     list-style-type: none;
     padding: 0;
 }
@@ -126,6 +129,7 @@ body {
 h3 {
     margin: 20px 0;
     text-align: center;
+    color: white;
 }
 
 ul {
@@ -135,6 +139,10 @@ ul {
     background-color: #fff;
     border-radius: 5px;
     box-shadow: 0px 0px 10px 0px rgba(0,0,0,0.1);
+}
+
+.container > *:first-child {
+    margin-top: 0;
 }
 
 ul li {
@@ -147,4 +155,118 @@ ul li:last-child {
 
 .user-left {
     color: red;
+}
+
+.leave-room-btn {
+    background-color: #bf2d23; /* Red background */
+    color: white; /* White text */
+    padding: 12px 32px; /* Some padding */
+    text-align: center; /* Centered text */
+    text-decoration: none; /* Remove underline */
+    display: inline-block;
+    font-size: 16px;
+    margin: 4px 2px;
+    cursor: pointer; /* Mouse pointer on hover */
+    border-radius: 12px; /* Rounded corners */
+    transition-duration: 0.4s; /* Transition effect */
+}
+
+.leave-room-btn:hover {
+    background-color: white; /* White background */
+    color: black; /* Black text */
+}
+
+body {
+    font-family: Arial, sans-serif;
+}
+
+.top-part {
+    color: white;
+    /* background-color: rgba(0, 0, 0, 0.5); Black overlay, 50% opacity */
+    background-image: url('/FinalProject/static/flappy.jpg');
+    background-size: cover;
+    background-position: center;
+    background-blend-mode: overlay;
+}
+
+.buttons {
+    width: 300px;
+    margin: 100px auto 0; 
+}
+
+.join {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 20px;
+}
+
+select, button {
+    padding: 10px;
+    border: none;
+    border-radius: 5px;
+}
+
+.create-btn {
+    background-color: #4CAF50;
+    color: white;
+    cursor: pointer;
+}
+
+.create-btn:hover {
+    background-color: #45a049;
+}
+
+.container {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    box-shadow: 0px 0px 10px 0px rgba(0,0,0,0.1);
+    background-color: #6a7bf9;
+    padding-right: 30px;
+    padding-bottom: 30px;
+    padding-left: 30px;
+    margin-top: 100px;  
+}
+
+
+
+.logout-form {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+}
+
+.logout-btn {
+    background-color: #f44336;
+    color: white;
+    border: none;
+    padding: 10px 32px;
+    text-align: center;
+    text-decoration: none;
+    display: flex;
+    font-size: 16px;
+    margin: 4px 2px;
+    cursor: pointer;
+}
+
+.logout-btn:hover {
+    background-color: #d32f2f; 
+}
+
+.btn {
+    background-color: #8793d1;
+    border: none; 
+    color: white; 
+    padding: 15px 32px; 
+    text-align: center; 
+    text-decoration: none; 
+    display: inline-block;
+    font-size: 16px;
+    margin: 4px 2px;
+    cursor: pointer;
+    transition: background-color 0.3s ease; 
+}
+
+.btn:hover {
+    background-color: #b1c0f3; 
 }
